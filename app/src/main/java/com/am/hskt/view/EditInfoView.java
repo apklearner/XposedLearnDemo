@@ -39,9 +39,14 @@ public class EditInfoView extends RelativeLayout {
         if (attrs != null) {
             TypedArray typedValue = getContext().obtainStyledAttributes(attrs, R.styleable.add_items);
             String title = typedValue.getString(R.styleable.add_items_title);
+            String content = typedValue.getString(R.styleable.add_items_content);
             if (!TextUtils.isEmpty(title)) {
                 TAG = title;
                 tvTitle.setText(title);
+            }
+
+            if (!TextUtils.isEmpty(content)) {
+                etContent.setText(content);
             }
         }
     }

@@ -5,32 +5,65 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="50dp"
+        >
 
-        <com.am.hskt.view.EditInfoView
-            android:id="@+id/uuid"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="uuid"></com.am.hskt.view.EditInfoView>
+            android:orientation="vertical">
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/pkgName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="pkgName"
+                app:content="com.am.hskt"
+                ></com.am.hskt.view.EditInfoView>
 
-        <com.am.hskt.view.EditInfoView
-            android:id="@+id/deviceId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:title="deviceId"></com.am.hskt.view.EditInfoView>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/deviceId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="deviceId"></com.am.hskt.view.EditInfoView>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/android_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="android_id"></com.am.hskt.view.EditInfoView>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="model"></com.am.hskt.view.EditInfoView>
 
-    </LinearLayout>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/manufacture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="manufacture"></com.am.hskt.view.EditInfoView>
+
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="brand"></com.am.hskt.view.EditInfoView>
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/sure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="确定"
-        />
+        android:text="确定" />
 
 </RelativeLayout>

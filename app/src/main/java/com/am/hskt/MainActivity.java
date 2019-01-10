@@ -1,6 +1,7 @@
 package com.am.hskt;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -44,11 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String buildDeivceInfo() {
-        Log.e("1234", ModelConfigs.deviceId+"");
-        Log.e("1234", DeviceUtils.getDeviceId(this));
         StringBuffer buffer = new StringBuffer();
         String deviceId = DeviceUtils.getDeviceId(this);
-        buffer.append("devideId=").append(deviceId);
+        String uuid = DeviceUtils.randomDeviceUUID(this);
+        buffer.append("devideId=").append(deviceId).append("\n")
+                .append("android_id=").append(DeviceUtils.getAndroidId(this)).append("\n")
+                .append("uuid=").append(uuid).append("\n")
+                .append("model=").append(Build.MODEL).append("\n")
+                .append("manufacture=").append(Build.MANUFACTURER).append("\n")
+                .append("brand=").append(Build.BRAND).append("\n");
         return buffer.toString();
 
     }

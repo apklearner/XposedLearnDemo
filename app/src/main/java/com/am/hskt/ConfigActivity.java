@@ -1,5 +1,6 @@
 package com.am.hskt;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import com.am.hskt.view.EditInfoView;
 
 public class ConfigActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditInfoView uuid, deviceId;
+    private EditInfoView model, deviceId, manufacture, brand, pkgName, android_id;
     private Button sure;
 
 
@@ -25,9 +26,13 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initRes() {
+        pkgName = findViewById(R.id.pkgName);
         sure = findViewById(R.id.sure);
-        uuid = findViewById(R.id.uuid);
+        model = findViewById(R.id.model);
         deviceId = findViewById(R.id.deviceId);
+        manufacture = findViewById(R.id.manufacture);
+        brand = findViewById(R.id.brand);
+        android_id = findViewById(R.id.android_id);
 
         sure.setOnClickListener(this);
 
@@ -46,11 +51,16 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private boolean refreshConfig() {
+        String mPkgName = pkgName.getContent();
         StringBuffer buffer = new StringBuffer();
-        buffer.append("uuid").append(":").append("null").append("|")
-                .append("deviceId").append(":").append(!TextUtils.isEmpty(deviceId.getContent()) ? deviceId.getContent() : "null");
+        buffer.append("model").append(":").append(!TextUtils.isEmpty(model.getContent()) ? model.getContent() : Build.MODEL).append("|")
+                .append("deviceId").append(":").append(!TextUtils.isEmpty(deviceId.getContent()) ? deviceId.getContent() : DeviceUtils.getDeviceId(this)).append("|")
+                .append("manufacture").append(":").append(!TextUtils.isEmpty(manufacture.getContent()) ? manufacture.getContent() : Build.MANUFACTURER).append("|")
+                .append("brand").append(":").append(!TextUtils.isEmpty(brand.getContent()) ? brand.getContent() : Build.BRAND).append("|")
+                .append("android_id").append(":").append(!TextUtils.isEmpty(android_id.getContent()) ? android_id.getContent() : DeviceUtils.getAndroidId(this));
 
-        return FileUtils.writeFile(buffer.toString());
+
+        return FileUtils.writeFile(mPkgName, buffer.toString());
 
     }
 
