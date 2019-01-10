@@ -53,7 +53,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .append("uuid=").append(uuid).append("\n")
                 .append("model=").append(Build.MODEL).append("\n")
                 .append("manufacture=").append(Build.MANUFACTURER).append("\n")
-                .append("brand=").append(Build.BRAND).append("\n");
+                .append("brand=").append(Build.BRAND).append("\n")
+                .append("sdk_int=").append(Build.VERSION.SDK_INT).append("\n")
+                .append("width=").append(getResources().getDisplayMetrics().widthPixels).append("\n")
+                .append("height=").append(getResources().getDisplayMetrics().heightPixels);
         return buffer.toString();
 
     }

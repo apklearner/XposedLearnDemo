@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
         >
 
         <LinearLayout
@@ -55,6 +56,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:title="brand"></com.am.hskt.view.EditInfoView>
+
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/sdk_int"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="sdk_int"></com.am.hskt.view.EditInfoView>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="width"></com.am.hskt.view.EditInfoView>
+            <com.am.hskt.view.EditInfoView
+                android:id="@+id/height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:title="height"></com.am.hskt.view.EditInfoView>
 
         </LinearLayout>
     </ScrollView>

@@ -134,7 +134,11 @@ public class HookMain implements IXposedHookLoadPackage {
 //            }
 //        });
 
-
+        /**
+         * MODEL
+         * MANUFACTURER
+         * BRAND
+         */
         findAndHookMethod("android.os.SystemProperties", loadPackageParam.classLoader, "get", String.class, String.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -151,11 +155,26 @@ public class HookMain implements IXposedHookLoadPackage {
                 String brand = getFileString(loadPackageParam.packageName, "brand");
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "BRAND", brand == null ? Build.BRAND : brand);
 
-            }
+                String sdkIntString = getFileString(loadPackageParam.packageName, "sdk_int");
+                int sdkInt = sdkIntString == null ? Build.VERSION.SDK_INT : Integer.parseInt(sdkIntString);
+                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt > 0 ? sdkInt : Build.VERSION.SDK_INT);
 
+
+                //TODO
+                String witdhStr = getFileString(loadPackageParam.packageName, "width");
+                String heightStr = getFileString(loadPackageParam.packageName, "height");
+                int width = witdhStr == null ? context.getResources().getDisplayMetrics().widthPixels : Integer.parseInt(witdhStr);
+                int height = heightStr == null ? context.getResources().getDisplayMetrics().heightPixels : Integer.parseInt(heightStr);
+
+                XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "widthPixels", width);
+                XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "heightPixels", height);
+            }
 
         });
 
+        /**
+         * android_id
+         */
         findAndHookMethod("android.provider.Settings.Secure", loadPackageParam.classLoader, "getString", ContentResolver.class, String.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -175,6 +194,41 @@ public class HookMain implements IXposedHookLoadPackage {
             }
         });
 
+
+        /***
+         *  subscriberId
+         */
+        findAndHookMethod("android.telephony.TelephonyManager", loadPackageParam.classLoader, "getSubscriberId", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                String subscriberId = getFileString(loadPackageParam.packageName, "subscriberId");
+                if (!TextUtils.isEmpty(subscriberId)) {
+                    param.setResult(subscriberId);
+                }
+            }
+        });
+
+
+//        /***
+//         *
+//         */
+//        findAndHookMethod("android.content.res.ResourcesImpl", loadPackageParam.classLoader, "getDisplayMetrics", new XC_MethodHook() {
+//            @Override
+//            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+//                super.beforeHookedMethod(param);
+//
+//                String witdhStr = getFileString(loadPackageParam.packageName, "width");
+//                String heightStr = getFileString(loadPackageParam.packageName, "height");
+//                int width = witdhStr == null ? sw : Integer.parseInt(witdhStr);
+//                int height = heightStr == null ? sh : Integer.parseInt(heightStr);
+////
+//                XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "widthPixels", width);
+//                XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "heightPixels", height);
+//
+//
+//            }
+//        });
 
     }
 

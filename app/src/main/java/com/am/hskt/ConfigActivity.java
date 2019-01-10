@@ -1,5 +1,6 @@
 package com.am.hskt;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,9 @@ import android.widget.Toast;
 import com.am.hskt.view.EditInfoView;
 
 
-public class ConfigActivity extends AppCompatActivity implements View.OnClickListener {
+public class ConfigActivity extends Activity implements View.OnClickListener {
 
-    private EditInfoView model, deviceId, manufacture, brand, pkgName, android_id;
+    private EditInfoView model, deviceId, manufacture, brand, pkgName, android_id, sdk_int, _width, _height;
     private Button sure;
 
 
@@ -33,6 +34,9 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
         manufacture = findViewById(R.id.manufacture);
         brand = findViewById(R.id.brand);
         android_id = findViewById(R.id.android_id);
+        sdk_int = findViewById(R.id.sdk_int);
+        _width = findViewById(R.id.width);
+        _height = findViewById(R.id.height);
 
         sure.setOnClickListener(this);
 
@@ -57,7 +61,10 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
                 .append("deviceId").append(":").append(!TextUtils.isEmpty(deviceId.getContent()) ? deviceId.getContent() : DeviceUtils.getDeviceId(this)).append("|")
                 .append("manufacture").append(":").append(!TextUtils.isEmpty(manufacture.getContent()) ? manufacture.getContent() : Build.MANUFACTURER).append("|")
                 .append("brand").append(":").append(!TextUtils.isEmpty(brand.getContent()) ? brand.getContent() : Build.BRAND).append("|")
-                .append("android_id").append(":").append(!TextUtils.isEmpty(android_id.getContent()) ? android_id.getContent() : DeviceUtils.getAndroidId(this));
+                .append("android_id").append(":").append(!TextUtils.isEmpty(android_id.getContent()) ? android_id.getContent() : DeviceUtils.getAndroidId(this)).append("|")
+                .append("sdk_int").append(":").append(!TextUtils.isEmpty(sdk_int.getContent()) ? sdk_int.getContent() : Build.VERSION.SDK_INT).append("|")
+                .append("width").append(":").append(!TextUtils.isEmpty(_width.getContent()) ? _width.getContent() : getResources().getDisplayMetrics().widthPixels).append("|")
+                .append("height").append(":").append(!TextUtils.isEmpty(_height.getContent()) ? _height.getContent() : getResources().getDisplayMetrics().heightPixels);
 
 
         return FileUtils.writeFile(mPkgName, buffer.toString());
