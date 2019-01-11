@@ -131,34 +131,34 @@ public class HookMain implements IXposedHookLoadPackage {
 //                Log.e("1234", "beforeHookedMethod  Build ");
 
                 String model = getFileString(loadPackageParam.packageName, FieldEnums.model.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "MODEL", model == null ? Build.MODEL : model);
+                setStaticObjectField(android.os.Build.class, "MODEL", model, Build.MODEL);
 
                 String manufacture = getFileString(loadPackageParam.packageName, FieldEnums.manufacture.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "MANUFACTURER", manufacture == null ? Build.MANUFACTURER : manufacture);
+                setStaticObjectField(android.os.Build.class, "MANUFACTURER", manufacture, Build.MANUFACTURER);
 
                 String brand = getFileString(loadPackageParam.packageName, FieldEnums.brand.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "BRAND", brand == null ? Build.BRAND : brand);
+                setStaticObjectField(android.os.Build.class, "BRAND", brand, Build.BRAND);
 
                 String sdkIntString = getFileString(loadPackageParam.packageName, FieldEnums.sdk_int.value);
                 int sdkInt = sdkIntString == null ? Build.VERSION.SDK_INT : Integer.parseInt(sdkIntString);
-                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt > 0 ? sdkInt : Build.VERSION.SDK_INT);
-                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK", sdkInt > 0 ? sdkInt + "" : Build.VERSION.SDK);
+                setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt, Build.VERSION.SDK_INT);
+                setStaticObjectField(android.os.Build.VERSION.class, "SDK", sdkInt, Build.VERSION.SDK);
 
 
                 String sdkReleaseStr = getFileString(loadPackageParam.packageName, FieldEnums.sdk_release.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "RELEASE", sdkReleaseStr == null ? Build.VERSION.RELEASE : sdkReleaseStr);
+                setStaticObjectField(android.os.Build.VERSION.class, "RELEASE", sdkReleaseStr, Build.VERSION.RELEASE);
 
                 //board
                 String boardStr = getFileString(loadPackageParam.packageName, FieldEnums.board.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "BOARD", boardStr == null ? Build.BOARD : boardStr);
+                setStaticObjectField(android.os.Build.class, "BOARD", boardStr, Build.BOARD);
 
                 //cpu_abi
                 String cpu_abiStr = getFileString(loadPackageParam.packageName, FieldEnums.cpu_abi.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "CPU_ABI", cpu_abiStr == null ? Build.CPU_ABI : cpu_abiStr);
+                setStaticObjectField(android.os.Build.class, "CPU_ABI", cpu_abiStr, Build.CPU_ABI);
 
                 //product
                 String productStr = getFileString(loadPackageParam.packageName, FieldEnums.product.value);
-                XposedHelpers.setStaticObjectField(android.os.Build.class, "PRODUCT", productStr == null ? Build.PRODUCT : productStr);
+                setStaticObjectField(android.os.Build.class, "PRODUCT", productStr, Build.PRODUCT);
 
                 //TODO
                 String witdhStr = getFileString(loadPackageParam.packageName, FieldEnums.width.value);
@@ -288,6 +288,20 @@ public class HookMain implements IXposedHookLoadPackage {
 
     }
 
+
+    private static void setStaticObjectField(Class mClass, String fieldName, Object replaceValue, Object defaultValue) {
+        if (replaceValue instanceof String) {
+            XposedHelpers.setStaticObjectField(mClass, fieldName, replaceValue == null ? defaultValue : replaceValue);
+        } else if (replaceValue instanceof Integer) {
+            if (defaultValue instanceof String) {
+                XposedHelpers.setStaticObjectField(mClass, fieldName, (int) replaceValue > 0 ? (int) replaceValue + "" : defaultValue);
+            } else {
+                XposedHelpers.setStaticObjectField(mClass, fieldName, (int) replaceValue > 0 ? (int) replaceValue : (int) defaultValue);
+            }
+
+        }
+
+    }
 
     public static String getFileString(String pkgName, String string) {
         try {
