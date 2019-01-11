@@ -13,12 +13,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.am.hskt.FieldEnmus;
 import com.am.hskt.R;
 
 public class AddPopWindow implements AdapterView.OnItemClickListener {
 
     private PopupWindow popupWindow;
-    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
+//    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
+
+    private FieldEnmus values[] = FieldEnmus.values();
     //TODO  "userAgent"
     private OnItemSelect callBack;
     private Context context;
@@ -26,7 +29,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (callBack != null) {
-            callBack.onSelect(values[position]);
+            callBack.onSelect(values[position].getValue());
             popupWindow.dismiss();
         }
     }
@@ -87,7 +90,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvTitle.setText(values[position]);
+            viewHolder.tvTitle.setText(values[position].getValue());
             return convertView;
         }
 

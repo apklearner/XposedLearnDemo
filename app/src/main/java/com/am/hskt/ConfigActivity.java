@@ -23,6 +23,8 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
     private Button add;
     private AddPopWindow popWindow;
 
+    private static final String PkgName_TAG = "pkgName";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
         popWindow = new AddPopWindow(this);
         popWindow.setSelectListener(this);
 
+        addContentView(PkgName_TAG);
     }
 
 
@@ -80,7 +83,7 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
         if (container != null && container.getChildCount() >= 2) {
             for (int i = 0; i < container.getChildCount(); i++) {
                 EditInfoView infoView = (EditInfoView) container.getChildAt(i);
-                if (infoView.getTagData().equals("pkgName")) {
+                if (infoView.getTagData().equals(PkgName_TAG)) {
                     mPkgName = infoView.getContent();
                 } else {
                     String content = infoView.getContent();
@@ -89,20 +92,29 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
             }
+        } else {
+            Toast.makeText(this, "需要配置参数", Toast.LENGTH_SHORT).show();
+            return false;
         }
+
+
         if (TextUtils.isEmpty(mPkgName)) {
             Toast.makeText(this, "包名为空", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        Log.e("1234", "appData  " +mPkgName +"  " + buffer.toString());
+        Log.e("1234", "appData  " + mPkgName + "  " + buffer.toString());
         return FileUtils.writeFile(mPkgName, buffer.toString());
     }
 
     @Override
     public void onSelect(String title) {
+        addContentView(title);
+    }
+
+    private void addContentView(String title) {
         EditInfoView infoView = new EditInfoView(this);
-        if ("pkgName".equals(title)) {
+        if (PkgName_TAG.equals(title)) {
             infoView.setContent(getPackageName());
         }
 

@@ -58,21 +58,6 @@ public class HookMain implements IXposedHookLoadPackage {
 
     private void hookKG(final XC_LoadPackage.LoadPackageParam loadPackageParam, final Context context) {
 
-//        findAndHookConstructor(DexClassLoader.class, String.class, String.class, String.class, ClassLoader.class, new XC_MethodHook() {
-//            @Override
-//            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-//                Log.w(TAG, param.args[0] + " |  " + param.args[1] + "|" + param.args[2]);
-//                File dir = new File(Environment.getExternalStorageDirectory(), "/myDex/" + formatDate(System.currentTimeMillis()));
-//                if (!dir.exists() || !dir.isDirectory())
-//                    dir.mkdirs();
-//
-//                String name = (String) param.args[0];
-//                String dexname = name.substring(name.lastIndexOf("/") + 1);
-//                File destFile = new File(dir, dexname);
-//                writeToDes(new File((String) param.args[0]), destFile);
-//
-//            }
-//        });
 
 //        findAndHookMethod("java.util.UUID", param.classLoader, "randomUUID", new XC_MethodHook() {
 //            @Override
@@ -109,8 +94,8 @@ public class HookMain implements IXposedHookLoadPackage {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-                String replaceDeviceId = getFileString(loadPackageParam.packageName, "deviceId");
-                Logger.e(TAG, "afterHookedMethod  deviceId ->>> " + replaceDeviceId);
+                String replaceDeviceId = getFileString(loadPackageParam.packageName, FieldEnmus.deviceId.value);
+//                Logger.e(TAG, "afterHookedMethod  deviceId ->>> " + replaceDeviceId);
                 if (replaceDeviceId != null) {
                     param.setResult(replaceDeviceId);
                 }
@@ -147,38 +132,40 @@ public class HookMain implements IXposedHookLoadPackage {
 
 //                Log.e("1234", "beforeHookedMethod  Build ");
 
-                String model = getFileString(loadPackageParam.packageName, "model");
+                String model = getFileString(loadPackageParam.packageName, FieldEnmus.model.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "MODEL", model == null ? Build.MODEL : model);
 
-                String manufacture = getFileString(loadPackageParam.packageName, "manufacture");
+                String manufacture = getFileString(loadPackageParam.packageName, FieldEnmus.manufacture.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "MANUFACTURER", manufacture == null ? Build.MANUFACTURER : manufacture);
 
-                String brand = getFileString(loadPackageParam.packageName, "brand");
+                String brand = getFileString(loadPackageParam.packageName, FieldEnmus.brand.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "BRAND", brand == null ? Build.BRAND : brand);
 
-                String sdkIntString = getFileString(loadPackageParam.packageName, "sdk_int");
+                String sdkIntString = getFileString(loadPackageParam.packageName, FieldEnmus.sdk_int.value);
                 int sdkInt = sdkIntString == null ? Build.VERSION.SDK_INT : Integer.parseInt(sdkIntString);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt > 0 ? sdkInt : Build.VERSION.SDK_INT);
+                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK", sdkInt > 0 ? sdkInt + "" : Build.VERSION.SDK);
 
-                String sdkReleaseStr = getFileString(loadPackageParam.packageName, "sdk_release");
+
+                String sdkReleaseStr = getFileString(loadPackageParam.packageName, FieldEnmus.sdk_release.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "RELEASE", sdkReleaseStr == null ? Build.VERSION.RELEASE : sdkReleaseStr);
 
                 //board
-                String boardStr = getFileString(loadPackageParam.packageName, "board");
+                String boardStr = getFileString(loadPackageParam.packageName, FieldEnmus.board.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "BOARD", boardStr == null ? Build.BOARD : boardStr);
 
                 //cpu_abi
-                String cpu_abiStr = getFileString(loadPackageParam.packageName, "cpu_abi");
+                String cpu_abiStr = getFileString(loadPackageParam.packageName, FieldEnmus.cpu_abi.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "CPU_ABI", cpu_abiStr == null ? Build.CPU_ABI : cpu_abiStr);
 
                 //product
-                String productStr = getFileString(loadPackageParam.packageName, "product");
+                String productStr = getFileString(loadPackageParam.packageName, FieldEnmus.product.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "PRODUCT", productStr == null ? Build.PRODUCT : productStr);
 
                 //TODO
-                String witdhStr = getFileString(loadPackageParam.packageName, "width");
-                String heightStr = getFileString(loadPackageParam.packageName, "height");
-                String densityStr = getFileString(loadPackageParam.packageName, "density");
+                String witdhStr = getFileString(loadPackageParam.packageName, FieldEnmus.width.value);
+                String heightStr = getFileString(loadPackageParam.packageName, FieldEnmus.height.value);
+                String densityStr = getFileString(loadPackageParam.packageName, FieldEnmus.density.value);
 
                 int width = witdhStr == null ? context.getResources().getDisplayMetrics().widthPixels : Integer.parseInt(witdhStr);
                 int height = heightStr == null ? context.getResources().getDisplayMetrics().heightPixels : Integer.parseInt(heightStr);
@@ -207,9 +194,10 @@ public class HookMain implements IXposedHookLoadPackage {
 //                Log.e("1234", "afterHookedMethod  Secure ");
 
                 String params2 = (String) param.args[1];
-                if ("android_id".equals(params2)) {
-                    String androidId = getFileString(loadPackageParam.packageName, "android_id");
-                    param.setResult(androidId == null ? DeviceUtils.getAndroidId(context) : androidId);
+                if (FieldEnmus.android_id.value.equals(params2)) {
+                    String androidId = getFileString(loadPackageParam.packageName, FieldEnmus.android_id.value);
+                    if (!TextUtils.isEmpty(androidId))
+                        param.setResult(androidId);
                 }
             }
         });
@@ -222,7 +210,7 @@ public class HookMain implements IXposedHookLoadPackage {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-                String subscriberId = getFileString(loadPackageParam.packageName, "subscriberId");
+                String subscriberId = getFileString(loadPackageParam.packageName, FieldEnmus.subscriberId.value);
                 if (!TextUtils.isEmpty(subscriberId)) {
                     param.setResult(subscriberId);
                 }
@@ -240,6 +228,44 @@ public class HookMain implements IXposedHookLoadPackage {
                 }
             }
         });
+
+
+        findAndHookMethod("java.io.File", loadPackageParam.classLoader, "exists", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                File file = (File) param.thisObject;
+                String path = file.getPath();
+                if (!TextUtils.isEmpty(path)) {
+                    if (path.contains("system/bin/su") || path.contains("system/xbin/su") || path.contains("system/app/Superuser.apk")) {
+                        String root = getFileString(loadPackageParam.packageName, FieldEnmus.root.value);
+                        if (!TextUtils.isEmpty(root))
+                            param.setResult(false);
+
+                    }
+                }
+            }
+        });
+
+
+//        findAndHookMethod("java.lang.Runtime", loadPackageParam.classLoader, "exec", String[].class, new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                super.afterHookedMethod(param);
+//                try {
+//                    String[] value = (String[]) param.args[0];
+//                    if (value.length == 2) {
+//                        if (value[0].contains("system/xbin/which") && value[1].contains("su")) {
+//                            String root = getFileString(loadPackageParam.packageName, "root");
+//                            if (!TextUtils.isEmpty(root))
+//                                param.setResult(null);
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
 
 //        /***

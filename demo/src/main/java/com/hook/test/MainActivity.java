@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .append("subscriberId=").append(subscriberId).append("\n")
                 .append("board=").append(Build.BOARD).append("\n")
                 .append("cup_abi=").append(Build.CPU_ABI).append("\n")
-                .append("product=").append(Build.PRODUCT).append("\n");
+                .append("product=").append(Build.PRODUCT).append("\n")
+                .append("rooted=").append(DeviceUtils.isRoot()).append("\n");
 //                .append("userAgent=").append(new WebView(this).getSettings().getUserAgentString());
         return buffer.toString();
 

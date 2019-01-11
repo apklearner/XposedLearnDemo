@@ -19,12 +19,15 @@ import android.util.DisplayMetrics;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.UUID;
 
@@ -638,6 +641,44 @@ public class DeviceUtils {
             return packageInfo != null;
         } catch (Exception e) {
 //            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public static boolean isDeivceRooted() {
+
+        return isTagDebug() || isSuperUser() || isXbinSuExist();
+    }
+
+    private static boolean isTagDebug() {
+        String tag = Build.TAGS;
+        return tag != null && tag.contains("test-keys");
+    }
+
+    private static boolean isSuperUser() {
+        try {
+            return new File("/system/app/Superuser.apk").exists();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static boolean isXbinSuExist() {
+        try {
+            ArrayList<String> arrays = new ArrayList<>();
+            String command[] = new String[]{"/system/xbin/which", "su"};
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String len;
+            while ((len = br.readLine()) != null) {
+                arrays.add(len);
+            }
+            return arrays != null && !arrays.isEmpty();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
