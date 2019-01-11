@@ -3,12 +3,10 @@ package com.am.hskt;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
@@ -94,7 +92,7 @@ public class HookMain implements IXposedHookLoadPackage {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-                String replaceDeviceId = getFileString(loadPackageParam.packageName, FieldEnmus.deviceId.value);
+                String replaceDeviceId = getFileString(loadPackageParam.packageName, FieldEnums.deviceId.value);
 //                Logger.e(TAG, "afterHookedMethod  deviceId ->>> " + replaceDeviceId);
                 if (replaceDeviceId != null) {
                     param.setResult(replaceDeviceId);
@@ -132,40 +130,40 @@ public class HookMain implements IXposedHookLoadPackage {
 
 //                Log.e("1234", "beforeHookedMethod  Build ");
 
-                String model = getFileString(loadPackageParam.packageName, FieldEnmus.model.value);
+                String model = getFileString(loadPackageParam.packageName, FieldEnums.model.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "MODEL", model == null ? Build.MODEL : model);
 
-                String manufacture = getFileString(loadPackageParam.packageName, FieldEnmus.manufacture.value);
+                String manufacture = getFileString(loadPackageParam.packageName, FieldEnums.manufacture.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "MANUFACTURER", manufacture == null ? Build.MANUFACTURER : manufacture);
 
-                String brand = getFileString(loadPackageParam.packageName, FieldEnmus.brand.value);
+                String brand = getFileString(loadPackageParam.packageName, FieldEnums.brand.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "BRAND", brand == null ? Build.BRAND : brand);
 
-                String sdkIntString = getFileString(loadPackageParam.packageName, FieldEnmus.sdk_int.value);
+                String sdkIntString = getFileString(loadPackageParam.packageName, FieldEnums.sdk_int.value);
                 int sdkInt = sdkIntString == null ? Build.VERSION.SDK_INT : Integer.parseInt(sdkIntString);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt > 0 ? sdkInt : Build.VERSION.SDK_INT);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK", sdkInt > 0 ? sdkInt + "" : Build.VERSION.SDK);
 
 
-                String sdkReleaseStr = getFileString(loadPackageParam.packageName, FieldEnmus.sdk_release.value);
+                String sdkReleaseStr = getFileString(loadPackageParam.packageName, FieldEnums.sdk_release.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "RELEASE", sdkReleaseStr == null ? Build.VERSION.RELEASE : sdkReleaseStr);
 
                 //board
-                String boardStr = getFileString(loadPackageParam.packageName, FieldEnmus.board.value);
+                String boardStr = getFileString(loadPackageParam.packageName, FieldEnums.board.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "BOARD", boardStr == null ? Build.BOARD : boardStr);
 
                 //cpu_abi
-                String cpu_abiStr = getFileString(loadPackageParam.packageName, FieldEnmus.cpu_abi.value);
+                String cpu_abiStr = getFileString(loadPackageParam.packageName, FieldEnums.cpu_abi.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "CPU_ABI", cpu_abiStr == null ? Build.CPU_ABI : cpu_abiStr);
 
                 //product
-                String productStr = getFileString(loadPackageParam.packageName, FieldEnmus.product.value);
+                String productStr = getFileString(loadPackageParam.packageName, FieldEnums.product.value);
                 XposedHelpers.setStaticObjectField(android.os.Build.class, "PRODUCT", productStr == null ? Build.PRODUCT : productStr);
 
                 //TODO
-                String witdhStr = getFileString(loadPackageParam.packageName, FieldEnmus.width.value);
-                String heightStr = getFileString(loadPackageParam.packageName, FieldEnmus.height.value);
-                String densityStr = getFileString(loadPackageParam.packageName, FieldEnmus.density.value);
+                String witdhStr = getFileString(loadPackageParam.packageName, FieldEnums.width.value);
+                String heightStr = getFileString(loadPackageParam.packageName, FieldEnums.height.value);
+                String densityStr = getFileString(loadPackageParam.packageName, FieldEnums.density.value);
 
                 int width = witdhStr == null ? context.getResources().getDisplayMetrics().widthPixels : Integer.parseInt(witdhStr);
                 int height = heightStr == null ? context.getResources().getDisplayMetrics().heightPixels : Integer.parseInt(heightStr);
@@ -194,8 +192,8 @@ public class HookMain implements IXposedHookLoadPackage {
 //                Log.e("1234", "afterHookedMethod  Secure ");
 
                 String params2 = (String) param.args[1];
-                if (FieldEnmus.android_id.value.equals(params2)) {
-                    String androidId = getFileString(loadPackageParam.packageName, FieldEnmus.android_id.value);
+                if (FieldEnums.android_id.value.equals(params2)) {
+                    String androidId = getFileString(loadPackageParam.packageName, FieldEnums.android_id.value);
                     if (!TextUtils.isEmpty(androidId))
                         param.setResult(androidId);
                 }
@@ -210,7 +208,7 @@ public class HookMain implements IXposedHookLoadPackage {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-                String subscriberId = getFileString(loadPackageParam.packageName, FieldEnmus.subscriberId.value);
+                String subscriberId = getFileString(loadPackageParam.packageName, FieldEnums.subscriberId.value);
                 if (!TextUtils.isEmpty(subscriberId)) {
                     param.setResult(subscriberId);
                 }
@@ -238,7 +236,7 @@ public class HookMain implements IXposedHookLoadPackage {
                 String path = file.getPath();
                 if (!TextUtils.isEmpty(path)) {
                     if (path.contains("system/bin/su") || path.contains("system/xbin/su") || path.contains("system/app/Superuser.apk")) {
-                        String root = getFileString(loadPackageParam.packageName, FieldEnmus.root.value);
+                        String root = getFileString(loadPackageParam.packageName, FieldEnums.root.value);
                         if (!TextUtils.isEmpty(root))
                             param.setResult(false);
 

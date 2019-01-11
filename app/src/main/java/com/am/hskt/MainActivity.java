@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .append("product=").append(Build.PRODUCT).append("\n")
                 .append("rooted=").append(DeviceUtils.isRoot()).append("\n")
                 .append("sdk=").append(Build.VERSION.SDK).append("\n");
+
 //                .append("userAgent=").append(new WebView(this).getSettings().getUserAgentString());
         return buffer.toString();
 

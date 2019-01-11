@@ -1,7 +1,5 @@
 package com.am.hskt;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +50,7 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.sure:
                 boolean success = refreshConfig();
-                Toast.makeText(this, success ? "success" : "fail", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, success ? "success" : "fail", Toast.LENGTH_SHORT).show();
                 if (success) {
                     finish();
                 }
@@ -89,6 +87,9 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
                     String content = infoView.getContent();
                     if (!TextUtils.isEmpty(content)) {
                         buffer.append(infoView.getTagData()).append(":").append(content).append("|");
+                    } else {
+                        Toast.makeText(this, "参数配置是空", Toast.LENGTH_SHORT).show();
+                        return false;
                     }
                 }
             }
@@ -103,6 +104,7 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         }
 
+
         Log.e("1234", "appData  " + mPkgName + "  " + buffer.toString());
         return FileUtils.writeFile(mPkgName, buffer.toString());
     }
@@ -113,12 +115,32 @@ public class ConfigActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void addContentView(String title) {
-        EditInfoView infoView = new EditInfoView(this);
-        if (PkgName_TAG.equals(title)) {
-            infoView.setContent(getPackageName());
-        }
+        if (checkAdd(title)) {
+            EditInfoView infoView = new EditInfoView(this);
+            if (PkgName_TAG.equals(title)) {
+                infoView.setContent(getPackageName());
+            }
 
-        infoView.setTagData(title);
-        container.addView(infoView);
+            infoView.setTagData(title);
+            container.addView(infoView);
+        }
     }
+
+
+    private boolean checkAdd(String title) {
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                EditInfoView infoView = (EditInfoView) container.getChildAt(i);
+                String infoTitle = infoView.getTagData();
+                if (title.equals(infoTitle)) {
+                    Toast.makeText(this, "已经添加了该配置", Toast.LENGTH_SHORT).show();
+                    return false;
+
+                }
+            }
+        }
+        return true;
+    }
+
+
 }

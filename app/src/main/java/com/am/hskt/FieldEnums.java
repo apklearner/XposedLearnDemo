@@ -1,6 +1,6 @@
 package com.am.hskt;
 
-public enum FieldEnmus {
+public enum FieldEnums {
 
 //    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
 
@@ -24,7 +24,7 @@ public enum FieldEnmus {
 
     String value;
 
-    FieldEnmus(String value) {
+    FieldEnums(String value) {
         this.value = value;
     }
 

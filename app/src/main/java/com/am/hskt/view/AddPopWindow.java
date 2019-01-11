@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.am.hskt.FieldEnmus;
+import com.am.hskt.FieldEnums;
 import com.am.hskt.R;
 
 public class AddPopWindow implements AdapterView.OnItemClickListener {
@@ -21,7 +21,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
     private PopupWindow popupWindow;
 //    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
 
-    private FieldEnmus values[] = FieldEnmus.values();
+    private FieldEnums values[] = FieldEnums.values();
     //TODO  "userAgent"
     private OnItemSelect callBack;
     private Context context;
