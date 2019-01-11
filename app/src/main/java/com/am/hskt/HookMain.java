@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
@@ -159,15 +160,34 @@ public class HookMain implements IXposedHookLoadPackage {
                 int sdkInt = sdkIntString == null ? Build.VERSION.SDK_INT : Integer.parseInt(sdkIntString);
                 XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "SDK_INT", sdkInt > 0 ? sdkInt : Build.VERSION.SDK_INT);
 
+                String sdkReleaseStr = getFileString(loadPackageParam.packageName, "sdk_release");
+                XposedHelpers.setStaticObjectField(android.os.Build.VERSION.class, "RELEASE", sdkReleaseStr == null ? Build.VERSION.RELEASE : sdkReleaseStr);
+
+                //board
+                String boardStr = getFileString(loadPackageParam.packageName, "board");
+                XposedHelpers.setStaticObjectField(android.os.Build.class, "BOARD", boardStr == null ? Build.BOARD : boardStr);
+
+                //cpu_abi
+                String cpu_abiStr = getFileString(loadPackageParam.packageName, "cpu_abi");
+                XposedHelpers.setStaticObjectField(android.os.Build.class, "CPU_ABI", cpu_abiStr == null ? Build.CPU_ABI : cpu_abiStr);
+
+                //product
+                String productStr = getFileString(loadPackageParam.packageName, "product");
+                XposedHelpers.setStaticObjectField(android.os.Build.class, "PRODUCT", productStr == null ? Build.PRODUCT : productStr);
 
                 //TODO
                 String witdhStr = getFileString(loadPackageParam.packageName, "width");
                 String heightStr = getFileString(loadPackageParam.packageName, "height");
+                String densityStr = getFileString(loadPackageParam.packageName, "density");
+
                 int width = witdhStr == null ? context.getResources().getDisplayMetrics().widthPixels : Integer.parseInt(witdhStr);
                 int height = heightStr == null ? context.getResources().getDisplayMetrics().heightPixels : Integer.parseInt(heightStr);
+                float density = densityStr == null ? context.getResources().getDisplayMetrics().density : Float.parseFloat(densityStr);
 
                 XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "widthPixels", width);
                 XposedHelpers.setIntField(context.getResources().getDisplayMetrics(), "heightPixels", height);
+                XposedHelpers.setFloatField(context.getResources().getDisplayMetrics(), "density", density);
+
             }
 
         });
@@ -205,6 +225,18 @@ public class HookMain implements IXposedHookLoadPackage {
                 String subscriberId = getFileString(loadPackageParam.packageName, "subscriberId");
                 if (!TextUtils.isEmpty(subscriberId)) {
                     param.setResult(subscriberId);
+                }
+            }
+        });
+
+
+        findAndHookMethod("android.webkit.WebSettings", loadPackageParam.classLoader, "getUserAgentString", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                String userAgent = getFileString(loadPackageParam.packageName, "userAgent");
+                if (!TextUtils.isEmpty(userAgent)) {
+                    param.setResult(userAgent);
                 }
             }
         });

@@ -18,7 +18,8 @@ import com.am.hskt.R;
 public class AddPopWindow implements AdapterView.OnItemClickListener {
 
     private PopupWindow popupWindow;
-    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "brand", "android_id", "sdk_int", "width", "height"};
+    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
+    //TODO  "userAgent"
     private OnItemSelect callBack;
     private Context context;
 
@@ -38,7 +39,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
     public AddPopWindow(Context context) {
         this.context = context;
         View contentView = LayoutInflater.from(context).inflate(R.layout.layout_pop, null);
-        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);

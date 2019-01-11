@@ -16,7 +16,7 @@ import com.am.hskt.view.AddPopWindow;
 import com.am.hskt.view.EditInfoView;
 
 
-public class ConfigActivity extends Activity implements View.OnClickListener, AddPopWindow.OnItemSelect {
+public class ConfigActivity extends AppCompatActivity implements View.OnClickListener, AddPopWindow.OnItemSelect {
 
     private LinearLayout container;
     private Button sure;

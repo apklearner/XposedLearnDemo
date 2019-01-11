@@ -1,49 +1,30 @@
-package com.am.hskt;
+package com.hook.test;
 
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_config, btn_msg;
-    private TextView tv_msg;
+    private Button btnTest;
+    private TextView tvInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initRes();
-    }
 
-    private void initRes() {
-        btn_config = findViewById(R.id.btn_config);
-        btn_msg = findViewById(R.id.btn_msg);
-        tv_msg = findViewById(R.id.tv_msg);
 
-        btn_config.setOnClickListener(this);
-        btn_msg.setOnClickListener(this);
+        btnTest = findViewById(R.id.btn_test);
+        tvInfo = findViewById(R.id.tv_info);
+
+        btnTest.setOnClickListener(this);
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_config:
-                startActivity(new Intent(this, ConfigActivity.class));
-                break;
-            case R.id.btn_msg:
-                tv_msg.setText(buildDeivceInfo());
-                break;
-        }
-    }
 
     private String buildDeivceInfo() {
         StringBuffer buffer = new StringBuffer();
@@ -70,4 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_test:
+                tvInfo.setText(buildDeivceInfo());
+                break;
+        }
+    }
 }
