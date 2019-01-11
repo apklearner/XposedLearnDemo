@@ -53,7 +53,9 @@ public class EditInfoView extends RelativeLayout {
 
     public void setTagData(String mTag) {
         this.TAG = mTag;
+        tvTitle.setText(TAG);
     }
+
 
     public String getTagData() {
         return TAG;
@@ -61,6 +63,10 @@ public class EditInfoView extends RelativeLayout {
 
     public String getContent() {
         return etContent.getText().toString();
+    }
+
+    public void setContent(String title){
+        etContent.setText(title);
     }
 
 }

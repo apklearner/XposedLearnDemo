@@ -8,82 +8,42 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:layout_marginTop="20dp"
-        >
+        android:layout_marginBottom="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/pkgName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="pkgName"
-                app:content="com.am.hskt"
-                ></com.am.hskt.view.EditInfoView>
 
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/deviceId"
+            <LinearLayout
+                android:id="@+id/info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="deviceId"></com.am.hskt.view.EditInfoView>
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/android_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="android_id"></com.am.hskt.view.EditInfoView>
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="model"></com.am.hskt.view.EditInfoView>
-
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/manufacture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="manufacture"></com.am.hskt.view.EditInfoView>
-
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/brand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="brand"></com.am.hskt.view.EditInfoView>
-
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/sdk_int"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="sdk_int"></com.am.hskt.view.EditInfoView>
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/width"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="width"></com.am.hskt.view.EditInfoView>
-            <com.am.hskt.view.EditInfoView
-                android:id="@+id/height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:title="height"></com.am.hskt.view.EditInfoView>
+                android:orientation="vertical"></LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/sure"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="确定" />
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:text="添加" />
+
+        <Button
+            android:id="@+id/sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="确定" />
+    </LinearLayout>
 </RelativeLayout>
