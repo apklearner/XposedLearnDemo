@@ -53,8 +53,9 @@ public class HookLocation {
             }
         });
 
+        String hookGaode = FileUtils.getFileString(packageName, FieldEnums.hookGaoDeMap.value);
 
-        if (packageName.equals("com.alibaba.android.rimet")) {
+        if (!TextUtils.isEmpty(hookGaode)) {
 
             XposedHelpers.findAndHookMethod("com.amap.api.location.AMapLocation", classLoader, "getLatitude", new XC_MethodHook() {
                 @Override

@@ -51,7 +51,8 @@ public enum FieldEnums {
     netSubType("netSubType"),
     ipAdress("ipAdress"),
     lat("lat"),
-    lng("lng");
+    lng("lng"),
+    hookGaoDeMap("hookGaoDeMap");
 
 
     public String value;
