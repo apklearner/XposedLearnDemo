@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buffer.append("devideId=").append(deviceId).append("\n")
                 .append("android_id=").append(DeviceUtils.getAndroidId(this)).append("\n")
                 .append("uuid=").append(uuid).append("\n")
+                .append("tags=").append(Build.TAGS).append("\n")
                 .append("id=").append(Build.ID).append("\n")
                 .append("serial=").append(Build.USER).append("\n")
                 .append("model=").append(Build.MODEL).append("\n")

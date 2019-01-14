@@ -11,7 +11,7 @@ public enum FieldEnums {
     serial("serial"),
     model("model"),
     time("time"),
-    support_abi("support_abi"),
+//    support_abi("support_abi"),
     type("type"),
     hardward("hardware"),
     bootloader("bootloader"),

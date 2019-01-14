@@ -166,8 +166,8 @@ public class HookDevice {
     private static void hookBuild(Context context, String packageName) {
 
         //tag
-//        String tags = FileUtils.getFileString(packageName, FieldEnums.tags.value);
-//        HookMain.setStaticObjectField(android.os.Build.class, "TAGS", tags, Build.TAGS);
+        String tags = FileUtils.getFileString(packageName, FieldEnums.tags.value);
+        HookMain.setStaticObjectField(android.os.Build.class, "TAGS", tags, Build.TAGS);
 
         //id
         String id = FileUtils.getFileString(packageName, FieldEnums.id.value);

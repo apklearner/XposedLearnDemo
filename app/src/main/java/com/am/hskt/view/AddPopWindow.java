@@ -16,20 +16,28 @@ import android.widget.TextView;
 import com.am.hskt.FieldEnums;
 import com.am.hskt.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
 public class AddPopWindow implements AdapterView.OnItemClickListener {
 
     private PopupWindow popupWindow;
 //    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
 
-    private FieldEnums values[] = FieldEnums.values();
+    private List<FieldEnums> values = new ArrayList<>(Arrays.asList(FieldEnums.values()));
     //TODO  "userAgent"
     private OnItemSelect callBack;
     private Context context;
+    private MyAdapter adapter;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (callBack != null) {
-            callBack.onSelect(values[position].getValue());
+            callBack.onSelect(values.get(position).getValue());
+            values.remove(position);
+            adapter.notifyDataSetChanged();
             popupWindow.dismiss();
         }
     }
@@ -48,7 +56,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
         popupWindow.setFocusable(true);
 
         ListView lv = contentView.findViewById(R.id.lv);
-        lv.setAdapter(new MyAdapter());
+        lv.setAdapter(adapter = new MyAdapter());
         lv.setOnItemClickListener(this);
     }
 
@@ -66,7 +74,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
 
         @Override
         public int getCount() {
-            return values.length;
+            return values.size();
         }
 
         @Override
@@ -90,7 +98,7 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvTitle.setText(values[position].getValue());
+            viewHolder.tvTitle.setText(values.get(position).getValue());
             return convertView;
         }
 
