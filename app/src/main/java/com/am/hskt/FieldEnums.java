@@ -4,14 +4,28 @@ public enum FieldEnums {
 
 //    private String[] values = new String[]{"pkgName", "model", "deviceId", "manufacture", "product", "brand", "board", "cpu_abi", "android_id", "sdk_int", "sdk_release", "width", "height", "density", "subscriberId"};
 
-//    pkgName("pkgName"),
-    model("model"),
+    //    pkgName("pkgName"),
+    tags("tags"),
     deviceId("deviceId"),
+    id("id"),
+    serial("serial"),
+    model("model"),
+    time("time"),
+    support_abi("support_abi"),
+    type("type"),
+    hardward("hardware"),
+    bootloader("bootloader"),
+    fingerprint("fingerprint"),
+    user("user"),
+    host("host"),
+    device("device"),
+    display("display"),
     manufacture("manufacture"),
     product("product"),
     brand("brand"),
     board("board"),
     cpu_abi("cpu_abi"),
+    cpu_abi2("cup_abi2"),
     android_id("android_id"),
     sdk_int("sdk_int"),
     sdk_release("sdk_release"),
@@ -19,10 +33,28 @@ public enum FieldEnums {
     height("height"),
     density("density"),
     subscriberId("subscriberId"),
-    root("root");
+    netOperator("netOperator"),
+    simOperator("simOperator"),
+
+    lineNumber("lineNumber"),
+    simserialNumber("simserialNumber"),
 
 
-    String value;
+    telNetType("telNetType"),
+    simState("simState"),
+    root("root"),
+    bssid("bssid"),
+    ssid("ssid"),
+    mac("mac"),
+    wifiEnable("wifiEnable"),
+    netType("netType"),
+    netSubType("netSubType"),
+    ipAdress("ipAdress"),
+    lat("lat"),
+    lng("lng");
+
+
+    public String value;
 
     FieldEnums(String value) {
         this.value = value;

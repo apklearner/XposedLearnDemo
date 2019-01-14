@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String buildDeivceInfo() {
         StringBuffer buffer = new StringBuffer();
         String deviceId = DeviceUtils.getDeviceId(this);
+
         String uuid = DeviceUtils.randomDeviceUUID(this);
         String subscriberId = DeviceUtils.getSubscriberId(this);
         buffer.append("devideId=").append(deviceId).append("\n")

@@ -27,7 +27,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.UUID;
 
@@ -41,7 +40,7 @@ public class DeviceUtils {
      */
     public static String getDeviceId(Context context) {
         try {
-            if (PermissionUtils.checkPermission(context, Manifest.permission.READ_PHONE_STATE)) {
+            if (PermissionCheck.checkPermission(context, Manifest.permission.READ_PHONE_STATE)) {
                 TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
                 return checkDeviceId(tm.getDeviceId());
             }
@@ -558,6 +557,15 @@ public class DeviceUtils {
         return NULL;
     }
 
+    public static String getssid(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager.isWifiEnabled()) {
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            return wifiInfo.getSSID();
+        }
+        return null;
+    }
+
     public static String getInstallPackageName(Context ctx) {
         try {
             return ctx.getPackageName();
@@ -698,5 +706,27 @@ public class DeviceUtils {
 //        return false;
 //    }
 
+
+    public static String getSimOperatorName(Context context) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            return telephonyManager.getSimOperatorName();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static String getLineNumber(Context context) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            return telephonyManager.getLine1Number();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
