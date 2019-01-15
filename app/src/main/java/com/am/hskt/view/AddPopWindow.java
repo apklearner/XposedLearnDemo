@@ -50,10 +50,11 @@ public class AddPopWindow implements AdapterView.OnItemClickListener {
     public AddPopWindow(Context context) {
         this.context = context;
         View contentView = LayoutInflater.from(context).inflate(R.layout.layout_pop, null);
-        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+
 
         ListView lv = contentView.findViewById(R.id.lv);
         lv.setAdapter(adapter = new MyAdapter());
