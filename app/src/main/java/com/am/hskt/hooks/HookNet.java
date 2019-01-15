@@ -1,14 +1,10 @@
 package com.am.hskt.hooks;
 
 import android.content.Context;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.am.hskt.FieldEnums;
 import com.am.hskt.FileUtils;
-
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;

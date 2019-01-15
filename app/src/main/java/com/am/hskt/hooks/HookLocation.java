@@ -53,6 +53,18 @@ public class HookLocation {
             }
         });
 
+
+//        XposedHelpers.findAndHookMethod("android.location.LocationManager", classLoader, "getLastLocation", String.class, new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                Location l = new Location(LocationManager.GPS_PROVIDER);
+//                l.setAccuracy(100f);
+//                l.setTime(0);
+//                param.setResult(l);
+//            }
+//        });
+
+
         String hookGaode = FileUtils.getFileString(packageName, FieldEnums.hookGaoDeMap.value);
 
         if (!TextUtils.isEmpty(hookGaode)) {
@@ -83,7 +95,26 @@ public class HookLocation {
             });
         }
 
-    }
+//        XposedHelpers.findAndHookMethod("android.net.wifi.WifiManager", classLoader, "isWifiEnabled", new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                param.setResult(false);
+//            }
+//        });
+//
+//        XposedHelpers.findAndHookMethod("android.net.wifi.WifiInfo", classLoader, "getBSSID", new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                param.setResult("00-00-00-00-00-00-00-00");
+//            }
+//        });
+//        XposedHelpers.findAndHookMethod("android.net.wifi.WifiInfo", classLoader, "getMacAddress", new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                param.setResult("00-00-00-00-00-00-00-00");
+//            }
+//        });
 
+    }
 
 }

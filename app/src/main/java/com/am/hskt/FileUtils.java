@@ -130,21 +130,27 @@ public class FileUtils {
 
     public static void addDefaultConfig() {
         HashMap<String, String> map = new HashMap<>();
-        map.put(FieldEnums.lat.value, "32.890124");
-        map.put(FieldEnums.lng.value, "115.814205");
+//        map.put(FieldEnums.lat.value, "32.890124");
+//        map.put(FieldEnums.lng.value, "115.814205");
+
+        map.put(FieldEnums.lat.value, "39.92");
+        map.put(FieldEnums.lng.value, "116.52");
+
+        map.put(FieldEnums.deviceId.value,"");
+
         map.put(FieldEnums.android_id.value, "9c33128ba7cd8644");
-//        map.put(FieldEnums.model.value, "VKY-AL00");
-//        map.put(FieldEnums.manufacture.value, "HUAWEI");
+        map.put(FieldEnums.model.value, "VKY-AL00");
+        map.put(FieldEnums.manufacture.value, "HUAWEI");
 //        map.put(FieldEnums.brand.value, "HUAWEI");
 //        map.put(FieldEnums.sdk_int.value, "24");
 //        map.put(FieldEnums.sdk_release.value, "6.0");
 //        map.put(FieldEnums.width.value, "1080");
 //        map.put(FieldEnums.height.value, "1800");
 //        map.put(FieldEnums.density.value, "3");
-//        map.put(FieldEnums.board.value, "VKY");
-////        map.put(FieldEnums.cpu_abi.value, "arm64-v8a");
-//        map.put(FieldEnums.product.value, "VKY-AL00");
-//        map.put(FieldEnums.wifiEnable.value, "false");
+        map.put(FieldEnums.board.value, "VKY");
+        map.put(FieldEnums.cpu_abi.value, "arm64-v8a");
+        map.put(FieldEnums.product.value, "VKY-AL00");
+        map.put(FieldEnums.wifiEnable.value, "false");
 //        map.put(FieldEnums.lineNumber.value,"");
 //        map.put(FieldEnums.simserialNumber.value,"");
 
@@ -154,14 +160,15 @@ public class FileUtils {
         map.put(FieldEnums.netOperator.value, "460001");
         map.put(FieldEnums.simOperator.value, "460001");
         map.put(FieldEnums.simState.value, TelephonyManager.SIM_STATE_READY + "");
-//        map.put(FieldEnums.mac.value, "a8:a6:68:a3:d9:ef");
-//        map.put(FieldEnums.bssid.value, "ce:ea:8c:1a:5c:b2");
-//        map.put(FieldEnums.ssid.value, "wifi_abc");
-//        map.put(FieldEnums.ipAdress.value,"-123456789");
+        map.put(FieldEnums.mac.value, "00-00-00-00-00-00-00-00");
+        map.put(FieldEnums.bssid.value, "00-00-00-00-00-00-00-00");
+        map.put(FieldEnums.ssid.value, "wifi_abc");
+//        map.put(FieldEnums.ipAdress.value,"123456789");
 
-
-        writeFile("com.alibaba.android.rimet", createConfigs(map));
         writeFile("com.am.hskt", createConfigs(map));
+
+        map.put(FieldEnums.hookGaoDeMap.value, "true");
+        writeFile("com.alibaba.android.rimet", createConfigs(map));
 
 
     }
